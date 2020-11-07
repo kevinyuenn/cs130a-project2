@@ -15,9 +15,9 @@ class Dictionary {
         ~Dictionary();
         bool find(string word);
         void writeToFile(string fName);
-        Dictionary readFromFile(string fName);
+        static Dictionary readFromFile(string fName);
     private:
-        
+        vector<int> secondary;
         int tsize;
         struct firstHash{
             struct secondHash{
@@ -25,12 +25,15 @@ class Dictionary {
                 firstHash* next;
                 secondHash() : next(0){}
             };
+            int depth;
             Hash24 hashFunc;
             vector<secondHash> table;
-            firstHash() : hashFunc() {}
+            firstHash() : hashFunc(), depth(0) {}
         };
         firstHash* root;
-        void insertHelper(firstHash::secondHash &secondHash);
+        // void insertHelper(firstHash::secondHash &secondHash);
+        void insertHelper(firstHash *firstHash, int index);
+        bool findHelper(string word, firstHash *firstHash);
 };
 
 #endif

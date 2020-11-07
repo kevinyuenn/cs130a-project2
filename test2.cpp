@@ -4,18 +4,15 @@
 using namespace std;
 
 int main(){
-    Dictionary test("PA2_dataset_10000.txt",10000);
-    if (test.find("dog"))
+    Dictionary test2 = Dictionary::readFromFile("write.txt");
+    cout<<"1\n";
+    if (test2.find("dog"))
         cout<<"dog found\n";
     else cout<<"dog not found\n";
-    if(test.find("milfhunter"))
+    if(test2.find("milfhunter"))
         cout<<"milfhunter found\n";
     else cout<<"milfhunter not found\n";
-    if(test.find("kevin"))
+    if(test2.find("kevin"))
         cout<<"kevin found\n";
     else cout<<"kevin not found\n";
-
-    test.writeToFile("write.txt");
-    
-    return 0;
 }
