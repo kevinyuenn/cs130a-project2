@@ -161,22 +161,25 @@ void Dictionary::writeToFile(string fName)
     for(int i = 0; i < size; i++){
         currLen.push_back(initialList[i].length());
     }
-        cout<<initialList[size-1]<<endl;
-        cout<<currLen[size-1]<<endl;
+        // cout<<initialList[size-1]<<endl;
+        // cout<<currLen[size-1]<<endl;
     for(int i = 0; i < size; i++){
         string temp;
-        file.write((char*)&currLen[i], sizeof(currLen[i]));
+        file.write((char*)&currLen[i], sizeof(currLen[i])); //write size of string
         temp = initialList[i];
-        file.write((char*)&temp, currLen[i]);
-        if(i == size-1)
-            cout<<"\""<<temp<<"\""<<endl;
+        file.write((char*)&temp, currLen[i]);  //write string
+        // if(i == size-1){
+        //     cout<<"\""<<temp<<"\""<<endl;
+        // }
     }
     
     file.close();
+
+    //sample read test
     ifstream file2(filename, ios::in|ios::binary);
     int sizetest;
     file2.read((char*)&sizetest, sizeof(sizetest));
-    cout<<sizetest<<endl;
+    // cout<<sizetest<<endl;
     vector<string> v;
     for(int i=0; i < size; i++){
         int strLen;
@@ -186,10 +189,10 @@ void Dictionary::writeToFile(string fName)
         file2.read((char*)stringData, strLen*sizeof(char));
         string temp(stringData);
         v.push_back(temp.substr(0,strLen));
-        if (i == size-1){
-            cout<<strLen<<endl;
-            cout<<temp<<endl;
-        }
+        // if (i == size-1){
+        //     cout<<strLen<<endl;
+        //     cout<<temp<<endl;
+        // }
 
     }
 }
