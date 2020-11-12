@@ -1,10 +1,10 @@
 #include "dictionary.h"
-#include<string>
+#include <string>
 #include <iostream>
 #include <vector>
 #include <fstream>
 #include <cmath>
-#include<iomanip>
+#include <iomanip>
 
 using namespace std;
 Dictionary::Dictionary(){

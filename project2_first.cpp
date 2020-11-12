@@ -1,4 +1,4 @@
-#include "dict.h"
+#include "dictionary.h"
 #include <iostream>
 #include <fstream>
 
@@ -16,8 +16,10 @@ int main(int argc, char *argv[]){
         }
         infile.close();
     }
-    Dictionary d1(argv[1],count);
-    d1.writeToFile(argv[2]);
+    string input = argv[1];
+    Dictionary d1(input,count);
+    string file = argv[2];
+    d1.writeToFile(file);
 
     return 0;
 }

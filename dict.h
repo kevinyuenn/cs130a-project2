@@ -4,7 +4,6 @@
 #include "hash24.h"
 #include <string>
 #include <vector>
-#include <set>
 
 using namespace std;
 
@@ -16,7 +15,6 @@ class Dictionary {
         void writeToFile(string fName);
         static Dictionary readFromFile(string fName);
     private:
-        vector<int> secondary;
         struct firstHash{
             struct secondHash{
                 vector<string> words;
@@ -29,6 +27,7 @@ class Dictionary {
             firstHash() : hashFunc(), depth(0) {}
         };
         firstHash* root;
+        vector<int> secondary;
         void insertHelper(firstHash *firstHash, int index);
         bool findHelper(string word, firstHash *firstHash);
         vector<string> initialList;

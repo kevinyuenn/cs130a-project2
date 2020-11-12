@@ -126,25 +126,6 @@ void Dictionary::insertHelper(Dictionary::firstHash *first, int index){
         secondary[first->depth]++;
 }
 
-// void Dictionary::insertHelper(Dictionary::firstHash::secondHash &secondHash) 
-// {
-//     firstHash *n = new firstHash;
-//     secondHash.next = n;
-//     n->table.resize(pow(secondHash.words.size(),2));
-//     int index;
-//     for(int i = 0; i< secondHash.words.size();i++){
-//         index = n->hashFunc.hash(secondHash.words[i])%(n->table.size());
-//         n->table[index].words.push_back(secondHash.words[i]);
-//         // cout<<"inserted: "<<secondHash.words[i]<<" at index: "<<index<<"\n";
-//     }
-
-//     for (int i = 0; i < n->table.size(); i++){
-//         if(n->table[i].words.size()>1){
-//             insertHelper(n->table[i]);
-//         }
-//     }
-// }
-
 
 
 
@@ -168,25 +149,10 @@ bool Dictionary::findHelper(string word, Dictionary::firstHash *firstHash){
     return false;
 }
 
-// void Dictionary::writeToFileHelper(firstHash *firstHash,vector <Dictionary::firstHash> *first, int size) 
-// {
-//     if(!firstHash) return;
-//     for(int i = 0; i<size; i++){
-        
-//         if(firstHash->table.next);
-//     };
-// }
 
 
 void Dictionary::writeToFile(string fName) 
 {
-    // ofstream file1;
-    // size_t size = initialList.size();
-    // cout<<size<<endl;
-    // file1.open(fName, ios::out | ios::binary);
-    // file1.write(reinterpret_cast<char*>(&this->initialList[0]), size*sizeof(string));
-    // file1.close();
-    // cout<<"your shit is written\n";
     string filename = fName;
     ofstream file(filename, ios::out|ios::binary);
     int size = this->initialList.size();
@@ -197,20 +163,6 @@ void Dictionary::writeToFile(string fName)
 
 Dictionary Dictionary::readFromFile(string fName) 
 {
-    // const size_t count = file2.tellg()/ sizeof(string);
-    // cout<<count<<endl;
-    // vector<string> newVector;
-    // newVector.resize(10000);
-    // fstream file2;
-    // file2.open(fName, ios::in);
-    // file2.read((char*)(&newVector[0]),10000*sizeof(string));
-    // file2.close();
-    // cout<<newVector.size()<<endl;
-    // cout<<newVector[0]<<endl;
-    // cout<<newVector.size()<<endl;
-    // Dictionary d1 = Dictionary(newVector,newVector.size());
-    // cout<<"your shit is read\n";
-    // return d1;
     int size;
     vector<string> v;
     fstream file;
