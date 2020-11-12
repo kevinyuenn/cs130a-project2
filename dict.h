@@ -4,7 +4,7 @@
 #include "hash24.h"
 #include <string>
 #include <vector>
-
+#include <set>
 
 using namespace std;
 
@@ -12,13 +12,12 @@ class Dictionary {
     public:
         Dictionary();
         Dictionary(string fname, int tsize);
-        ~Dictionary();
         bool find(string word);
         void writeToFile(string fName);
         static Dictionary readFromFile(string fName);
     private:
+        // Dictionary(vector<string> list, int tsize);
         vector<int> secondary;
-        int tsize;
         struct firstHash{
             struct secondHash{
                 vector<string> words;
@@ -31,9 +30,15 @@ class Dictionary {
             firstHash() : hashFunc(), depth(0) {}
         };
         firstHash* root;
-        // void insertHelper(firstHash::secondHash &secondHash);
         void insertHelper(firstHash *firstHash, int index);
         bool findHelper(string word, firstHash *firstHash);
-};
+        // void writeToFileHelper( vector <Dictionary::firstHash> *firstObj,
+                                // vector <vector<string>> *tableWords, 
+                                // vector <Hash24> *hashObj,
+                                // vector <bool> *next,
+                                // vector <int> *tableSize,
+                                // firstHash *firstHash, int size);
+        vector<string> initialList;
+};      
 
 #endif

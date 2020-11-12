@@ -9,7 +9,9 @@
 
 using namespace std;
 
-Dictionary::Dictionary(): tsize(0), root(0){}
+Dictionary::Dictionary(){
+    root = 0;
+}
 
 Dictionary::Dictionary(string fname, int tsize) 
 {
@@ -27,6 +29,7 @@ Dictionary::Dictionary(string fname, int tsize)
     if (infile.is_open()){
 
         while (getline(infile,line)){
+            initialList.push_back(line);
             index = root->hashFunc.hash(line)%tsize;
             root->table[index].words.push_back(line);
             // cout<<"initial insert: "<<line<<" at index: "<<index<<"\n";
@@ -105,7 +108,6 @@ void Dictionary::insertHelper(Dictionary::firstHash *first, int index){
         hashIndex = n->hashFunc.hash(first->table[index].words[i])%(n->table.size());
         n->table[hashIndex].words.push_back(first->table[index].words[i]);
     }
-    int nextHash;
     for(int i = 0; i < n->table.size(); i++){
         if(n->table[i].words.size()>1){
             insertHelper(n, i);
@@ -146,11 +148,6 @@ void Dictionary::insertHelper(Dictionary::firstHash *first, int index){
 
 
 
-Dictionary::~Dictionary() 
-{
-    return;
-}
-
 bool Dictionary::find(string word) {
     return findHelper(word, root);
 }
@@ -163,32 +160,93 @@ bool Dictionary::findHelper(string word, Dictionary::firstHash *firstHash){
     if (firstHash->table[hashIndex].words.size() > 1){
         return findHelper(word, firstHash->table[hashIndex].next);
     }
-    else if(firstHash->table[hashIndex].words.size() == 1){
+    // else if(firstHash->table[hashIndex].words.size() == 1){
         if(word == firstHash->table[hashIndex].words[0]){
             return true;
         }
-    }
+    // }
     return false;
 }
+
+// void Dictionary::writeToFileHelper(firstHash *firstHash,vector <Dictionary::firstHash> *first, int size) 
+// {
+//     if(!firstHash) return;
+//     for(int i = 0; i<size; i++){
+        
+//         if(firstHash->table.next);
+//     };
+// }
 
 
 void Dictionary::writeToFile(string fName) 
 {
-    ofstream file1;
-    file1.open(fName, ios::out | ios::trunc);
-    file1.write((char*)this, sizeof(this));
-    file1.close();
+    // ofstream file1;
+    // size_t size = initialList.size();
+    // cout<<size<<endl;
+    // file1.open(fName, ios::out | ios::binary);
+    // file1.write(reinterpret_cast<char*>(&this->initialList[0]), size*sizeof(string));
+    // file1.close();
+    // cout<<"your shit is written\n";
+    string filename = fName;
+    ofstream file(filename, ios::out|ios::binary);
+    int size = this->initialList.size();
+    file.write((char*)&size, sizeof(int));
+    file.write((char*)&this->initialList[0], size*sizeof(string));
+    file.close();
 }
 
 Dictionary Dictionary::readFromFile(string fName) 
 {
-    Dictionary d1;
-    fstream file2;
-    file2.open(fName, ios::in | ios:: binary);
-    file2.read((char*)&d1, sizeof(d1));
-    file2.close();
-    return d1;
+    // const size_t count = file2.tellg()/ sizeof(string);
+    // cout<<count<<endl;
+    // vector<string> newVector;
+    // newVector.resize(10000);
+    // fstream file2;
+    // file2.open(fName, ios::in);
+    // file2.read((char*)(&newVector[0]),10000*sizeof(string));
+    // file2.close();
+    // cout<<newVector.size()<<endl;
+    // cout<<newVector[0]<<endl;
+    // cout<<newVector.size()<<endl;
+    // Dictionary d1 = Dictionary(newVector,newVector.size());
+    // cout<<"your shit is read\n";
+    // return d1;
+    Dictionary d;
+    int size;
+    vector<string> v;
+    fstream file;
+    file.open(fName, ios::in);
+    file.read((char*)&size, sizeof(int));
+    v.resize(size);
+    file.read((char*)&v[0], size*sizeof(string));
+    file.close();
+    cout<<"printing vector elements"<<endl;
+    cout<<v[0]<<endl;
+    cout<<v[9999]<<endl;
+    return d;
 }
+
+// Dictionary::Dictionary(vector<string> list, int tsize) 
+// {
+//     string line;
+//     ifstream infile;
+//     int index;
+//     int count = 0;
+//     root = new firstHash;
+//     root->table.resize(tsize); //set root table to tsize 
+//     for(int i = 0; i < tsize; i++){
+//         initialList.push_back(line);
+//         index = root->hashFunc.hash(line)%tsize;
+//         root->table[index].words.push_back(line);
+//         // cout<<"initial insert: "<<line<<" at index: "<<index<<"\n";
+//         count++;
+//     }
+//     for (int i = 0; i < root->table.size(); i++){
+//         if(root->table[i].words.size()>1){
+//             insertHelper(root, i);
+//         }
+//     }
+// }
 
 
 
