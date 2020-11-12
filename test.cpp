@@ -1,4 +1,4 @@
-#include "dictionary.h"
+#include "dict.h"
 #include <iostream>
 #include <fstream>
 
@@ -19,7 +19,7 @@ int main(){
     // test.writeToFile("writetest.txt");
 
     // cout<<endl;
-    Dictionary test("PA2_dataset.txt",349900);
+    Dictionary test("PA2_dataset_10000.txt",10000);
     test.writeToFile("test.txt");
     Dictionary test2;
     test2 = Dictionary::readFromFile("test.txt");
