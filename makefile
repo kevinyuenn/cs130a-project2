@@ -7,4 +7,4 @@ project2_second.out: hash24.cpp dict.cpp project2_second.cpp
 	g++ -std=c++11 $^ -o $@
 
 clean:
-	rm -f *.out
+	rm -f *.out dictionary.txt

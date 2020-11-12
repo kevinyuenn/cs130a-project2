@@ -161,16 +161,16 @@ void Dictionary::writeToFile(string fName)
     for(int i = 0; i < size; i++){
         currLen.push_back(initialList[i].length());
     }
-        cout<<initialList[size-1]<<endl;
-        cout<<currLen[size-1]<<endl;
+        // cout<<initialList[size-1]<<endl;
+        // cout<<currLen[size-1]<<endl;
     for(int i = 0; i < size; i++){
         string temp;
         file.write((char*)&currLen[i], sizeof(currLen[i])); //write size of string
         temp = initialList[i];
         file.write((char*)&temp, currLen[i]);  //write string
-        if(i == size-1){
-            cout<<"\""<<temp<<"\""<<endl;
-        }
+        // if(i == size-1){
+        //     cout<<"\""<<temp<<"\""<<endl;
+        // }
     }
     
     file.close();
@@ -179,7 +179,7 @@ void Dictionary::writeToFile(string fName)
     ifstream file2(filename, ios::in|ios::binary);
     int sizetest;
     file2.read((char*)&sizetest, sizeof(sizetest));
-    cout<<sizetest<<endl;
+    // cout<<sizetest<<endl;
     vector<string> v;
     for(int i=0; i < size; i++){
         int strLen;
@@ -189,12 +189,13 @@ void Dictionary::writeToFile(string fName)
         file2.read((char*)stringData, strLen*sizeof(char));
         string temp(stringData);
         v.push_back(temp.substr(0,strLen));
-        if (i == size-1){
-            cout<<strLen<<endl;
-            cout<<temp<<endl;
-        }
+        // if (i == size-1){
+        //     cout<<strLen<<endl;
+        //     cout<<temp<<endl;
+        // }
 
     }
+    file2.close();
 }
 
 Dictionary Dictionary::readFromFile(string fName) 
@@ -217,8 +218,8 @@ Dictionary Dictionary::readFromFile(string fName)
             cout<<strLen<<endl;
         }
     }
-    cout<<v[150]<<endl;
-    cout<<"made it 0.5 \n";
+    // cout<<v[150]<<endl;
+    // cout<<"made it 0.5 \n";
     file.close();
 
 
@@ -230,8 +231,8 @@ Dictionary Dictionary::readFromFile(string fName)
     }
     d.root = n;
     n->table.resize(size); //set root table to tsize 
-    cout<<"made it 1 \n";
-    cout<<v[150]<<endl;
+    // cout<<"made it 1 \n";
+    // cout<<v[150]<<endl;
     int index;
     for(int i = 0; i < size; i++){
         d.initialList.push_back(v[i]);
@@ -239,18 +240,18 @@ Dictionary Dictionary::readFromFile(string fName)
         n->table[index].words.push_back(v[i]);
         // cout<<"initial insert: "<<line<<" at index: "<<index<<"\n";
     }
-    cout<<"made it 2 \n";
-    cout<<n->table.size()<<endl;
+    // cout<<"made it 2 \n";
+    // cout<<n->table.size()<<endl;
     for (int i = 0; i < n->table.size(); i++){
         if(n->table[i].words.size()>1){
             cout<<n->table[i].words.size();
             d.insertHelper(n, i);
         }
     }
-    cout<<"made it 3 \n";
-    if(d.find("zus"))
-        cout<<"zus found\n";
-    else cout<<"zus not found\n";
+    // cout<<"made it 3 \n";
+    // if(d.find("zus"))
+    //     cout<<"zus found\n";
+    // else cout<<"zus not found\n";
     return d;
 }
 
