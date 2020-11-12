@@ -16,7 +16,6 @@ class Dictionary {
         void writeToFile(string fName);
         static Dictionary readFromFile(string fName);
     private:
-        // Dictionary(vector<string> list, int tsize);
         vector<int> secondary;
         struct firstHash{
             struct secondHash{
@@ -32,12 +31,6 @@ class Dictionary {
         firstHash* root;
         void insertHelper(firstHash *firstHash, int index);
         bool findHelper(string word, firstHash *firstHash);
-        // void writeToFileHelper( vector <Dictionary::firstHash> *firstObj,
-                                // vector <vector<string>> *tableWords, 
-                                // vector <Hash24> *hashObj,
-                                // vector <bool> *next,
-                                // vector <int> *tableSize,
-                                // firstHash *firstHash, int size);
         vector<string> initialList;
 };      
 

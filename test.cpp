@@ -1,4 +1,4 @@
-#include "dict.h"
+#include "dictionary.h"
 #include <iostream>
 #include <fstream>
 
@@ -19,10 +19,11 @@ int main(){
     // test.writeToFile("writetest.txt");
 
     // cout<<endl;
-    Dictionary test("PA2_dataset_10000.txt",10000);
-    test.writeToFile("writetest.txt");
+    Dictionary test("PA2_dataset.txt",349900);
+    test.writeToFile("test.txt");
     Dictionary test2;
-    test2.readFromFile("writetest.txt");
-    
-    return 0;
+    test2 = Dictionary::readFromFile("test.txt");
+    if(test2.find("zusu")){
+        cout<<"found zusu"<<endl;
+    }
 }
