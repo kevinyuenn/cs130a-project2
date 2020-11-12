@@ -141,11 +141,11 @@ bool Dictionary::findHelper(string word, Dictionary::firstHash *firstHash){
     if (firstHash->table[hashIndex].words.size() > 1){
         return findHelper(word, firstHash->table[hashIndex].next);
     }
-    // else if(firstHash->table[hashIndex].words.size() == 1){
+    else if(firstHash->table[hashIndex].words.size() == 1){
         if(word == firstHash->table[hashIndex].words[0]){
             return true;
         }
-    // }
+    }
     return false;
 }
 
@@ -156,42 +156,95 @@ void Dictionary::writeToFile(string fName)
     string filename = fName;
     ofstream file(filename, ios::out|ios::binary);
     int size = this->initialList.size();
-    file.write((char*)&size,sizeof(int));  //write size
-    file.write((char*)&this->initialList[0],initialList.size()*sizeof(string));
+    file.write((char*)&size, sizeof(size));  //write size once
+    vector<int> currLen;
+    for(int i = 0; i < size; i++){
+        currLen.push_back(initialList[i].length());
+    }
+        cout<<initialList[size-1]<<endl;
+        cout<<currLen[size-1]<<endl;
+    for(int i = 0; i < size; i++){
+        string temp;
+        file.write((char*)&currLen[i], sizeof(currLen[i]));
+        temp = initialList[i];
+        file.write((char*)&temp, currLen[i]);
+        if(i == size-1)
+            cout<<"\""<<temp<<"\""<<endl;
+    }
+    
     file.close();
+    ifstream file2(filename, ios::in|ios::binary);
+    int sizetest;
+    file2.read((char*)&sizetest, sizeof(sizetest));
+    cout<<sizetest<<endl;
+    vector<string> v;
+    for(int i=0; i < size; i++){
+        int strLen;
+        file2.read((char*)&strLen, sizeof(strLen));
+
+        char* stringData = new char[strLen];
+        file2.read((char*)stringData, strLen*sizeof(char));
+        string temp(stringData);
+        v.push_back(temp.substr(0,strLen));
+        if (i == size-1){
+            cout<<strLen<<endl;
+            cout<<temp<<endl;
+        }
+
+    }
 }
 
 Dictionary Dictionary::readFromFile(string fName) 
 {
     int size;
     vector<string> v;
-    fstream file;
-    Dictionary d;
+    ifstream file;
     firstHash *n = new firstHash;
     file.open(fName, ios::in);
-    file.read((char*)&size, sizeof(int));
-    v.resize(size);
-    file.read((char*)&v[0], size*sizeof(string));
+    file.read((char*)&size, sizeof(size));
+    for(int i = 0; i < size; i++){
+        int strLen;
+        file.read((char*)&strLen, sizeof(strLen));
+
+        char* stringData = new char[strLen];
+        file.read(stringData, strLen);
+        string temp(stringData);
+        v.push_back(temp.substr(0,strLen));
+        if (i == 0){
+            cout<<strLen<<endl;
+        }
+    }
+    cout<<v[150]<<endl;
+    cout<<"made it 0.5 \n";
     file.close();
 
+
+
+    Dictionary d;
     d.secondary.resize(20);
     for(int i = 0; i < 20; i++){
         d.secondary[i] = 0;
     }
-    int index;
     d.root = n;
-    n->table.resize(v.size()); //set root table to tsize 
-    for(int i = 0; i < v.size(); i++){
+    n->table.resize(size); //set root table to tsize 
+    cout<<"made it 1 \n";
+    cout<<v[150]<<endl;
+    int index;
+    for(int i = 0; i < size; i++){
         d.initialList.push_back(v[i]);
-        index = n->hashFunc.hash(v[i])%v.size();
+        index = n->hashFunc.hash(v[i])%size;
         n->table[index].words.push_back(v[i]);
         // cout<<"initial insert: "<<line<<" at index: "<<index<<"\n";
     }
+    cout<<"made it 2 \n";
+    cout<<n->table.size()<<endl;
     for (int i = 0; i < n->table.size(); i++){
         if(n->table[i].words.size()>1){
+            cout<<n->table[i].words.size();
             d.insertHelper(n, i);
         }
     }
+    cout<<"made it 3 \n";
     if(d.find("zus"))
         cout<<"zus found\n";
     else cout<<"zus not found\n";
